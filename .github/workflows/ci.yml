@@ -20,5 +20,17 @@ jobs:
           git config --local user.name "KAZANR"
           git remote set-url origin https://${{ github.actor }}:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}
           git pull --rebase
-          git commit --allow-empty -m "A commit an hour, a green scquare acquired."
+
+          # 定义表情符号列表
+          emojis=("😀" "😃" "😄" "😁" "😆" "😅" "🤣" "😂" "🙂" "🙃" "😉" "😊" "😇" "🥰" "😍" "🤩" "🥳" "😎" "🤓" "🧐")
+          # 随机选择 3 个表情
+          num_emojis=3
+          random_emojis=""
+          for ((i = 0; i < num_emojis; i++)); do
+            random_emoji=${emojis[$((RANDOM % ${#emojis[@]}))]}
+            random_emojis="$random_emojis$random_emoji"
+          done
+          # 构建提交信息
+          commit_msg="Auto commit with emojis: $random_emojis to keep green squares."
+          git commit --allow-empty -m "$commit_msg"
           git push
